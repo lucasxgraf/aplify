@@ -7,6 +7,7 @@ import ApplicationDashboard from './components/application_dashboard'
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <Navbar />
-    <ApplicationDashboard></ApplicationDashboard>
+    <ApplicationDashboard>
+    </ApplicationDashboard>
   </StrictMode>,
 )
