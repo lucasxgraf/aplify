@@ -1,12 +1,7 @@
 import { useState } from 'react';
+import type { StatusBadgeProps } from "../types";
 
-type StatusBadgeProps = {
-  label: string;
-  active: boolean;
-  onClick: () => void;
-};
-
-function StatusBadge({ label, active, onClick }: StatusBadgeProps) {
+export const StatusBadge = ({ label, active, onClick }: StatusBadgeProps) => {
   return (
     <button
       onClick={onClick}
@@ -21,7 +16,7 @@ function StatusBadge({ label, active, onClick }: StatusBadgeProps) {
   );
 }
 
-export function FilterBar() {
+export const FilterBar = () => {
   const [activeStatus, setActiveStatus] = useState("Alle");
   const statuses = ["Alle", "Beworben", "Interview", "Angebot", "Abgelehnt", "Zurückgezogen"];
 
@@ -38,5 +33,3 @@ export function FilterBar() {
     </div>
   );
 }
-
-export default StatusBadge;
