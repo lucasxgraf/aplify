@@ -1,16 +1,21 @@
 import { FilterBar } from './status_badge'
 import type { StatusbarProps } from '../types';
 
-export const Statusbar = ({activeStatus, onStatusChange}: StatusbarProps) => {
+export const Statusbar = ({activeStatus, onStatusChange, activeSort, onSortChange}: StatusbarProps) => {
     return (
         <div className="my-10 px-6 w-full h-16 bg-white rounded-xl border border-slate-200 flex items-center justify-between">
             <div className="flex gap-4 items-center ">
                 <span className="text-slate-500">STATUS</span>
-                <FilterBar activeStatus={activeStatus} onStatusChange={onStatusChange} />
+                <FilterBar activeStatus={activeStatus} onStatusChange={onStatusChange}/>
             </div>
             <div className="flex items-center gap-4">
                 <span className="text-slate-500">Sortieren</span>
-                <button className="text-slate-900 px-4 py-1 border border-slate-200 rounded-xl cursor-pointer"> Datum - neuste zuerst ⏷</button>
+                <select onChange={(e) => onSortChange(e.target.value)} value={activeSort} className="text-slate-900 text-center py-1 border border-slate-200 rounded-xl cursor-pointer">
+                    <option>Datum Neu-Alt</option>
+                    <option>Datum Alt-Neu</option>
+                    <option>Unternehmen A-Z</option>
+                    <option>Unternehmen Z-A</option>
+                </select>
             </div>
         </div>
     );

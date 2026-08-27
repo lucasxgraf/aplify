@@ -8,7 +8,7 @@ export type Application = {
     id: number,
     company: string,
     position: string,
-    status: string,
+    status: Status,
     appliedDate: Date,
     jobPostingUrl?: string,
     notes?: string
@@ -22,4 +22,8 @@ export type FilterBarProps = {
 export type StatusbarProps = {
   activeStatus: string;
   onStatusChange: (status: string) => void;
+  activeSort: string;
+  onSortChange: (sort: string) => void;
 }
+
+export type Status = "Beworben" | "Interview" | "Angebot" | "Abgelehnt" | "Zurückgezogen";
