@@ -1,5 +1,13 @@
-import { useState } from 'react';
-import type { StatusBadgeProps } from "../types";
+import type { StatusBadgeProps, FilterBarProps } from "../types";
+
+const statuses = [
+  "Alle",
+  "Beworben",
+  "Interview",
+  "Angebot",
+  "Abgelehnt",
+  "Zurückgezogen"
+];
 
 export const StatusBadge = ({ label, active, onClick }: StatusBadgeProps) => {
   return (
@@ -16,10 +24,7 @@ export const StatusBadge = ({ label, active, onClick }: StatusBadgeProps) => {
   );
 }
 
-export const FilterBar = () => {
-  const [activeStatus, setActiveStatus] = useState("Alle");
-  const statuses = ["Alle", "Beworben", "Interview", "Angebot", "Abgelehnt", "Zurückgezogen"];
-
+export const FilterBar = ({ activeStatus, onStatusChange }: FilterBarProps) => {
   return (
     <div className="flex gap-2">
       {statuses.map((status) => (
@@ -27,7 +32,7 @@ export const FilterBar = () => {
           key={status}
           label={status}
           active={status === activeStatus}
-          onClick={() => setActiveStatus(status)}
+          onClick={() => onStatusChange(status)}
         />
       ))}
     </div>

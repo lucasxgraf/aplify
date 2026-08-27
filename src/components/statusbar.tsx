@@ -1,11 +1,12 @@
 import { FilterBar } from './status_badge'
+import type { StatusbarProps } from '../types';
 
-export const Statusbar = () => {
+export const Statusbar = ({activeStatus, onStatusChange}: StatusbarProps) => {
     return (
         <div className="my-10 px-6 w-full h-16 bg-white rounded-xl border border-slate-200 flex items-center justify-between">
             <div className="flex gap-4 items-center ">
                 <span className="text-slate-500">STATUS</span>
-                <FilterBar />
+                <FilterBar activeStatus={activeStatus} onStatusChange={onStatusChange} />
             </div>
             <div className="flex items-center gap-4">
                 <span className="text-slate-500">Sortieren</span>

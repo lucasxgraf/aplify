@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Statusbar } from './statusbar'
 import { ApplicationCard } from './application_card'
 import type { Application } from '../types'
@@ -38,6 +39,12 @@ const applications: Application[] = [
 ]
 
 export const ApplicationDashboard = () => {
+    const [activeStatus, setActiveStatus] = useState<string>("Alle");
+
+    const visibleApplications = applications.filter(
+        (app) => activeStatus === "Alle" || app.status === activeStatus
+    );
+
     return (
         <div className="min-h-dvh bg-slate-50 p-8">
             <div className="flex items-end justify-between">
@@ -49,15 +56,14 @@ export const ApplicationDashboard = () => {
                     + Neue Bewerbung
                 </button>
             </div>
-            <Statusbar />
+            <Statusbar activeStatus={activeStatus} onStatusChange={setActiveStatus}/>
             <div className='grid grid-cols-3  gap-4'>
-                {
-                    applications.map((application) => (
-                        <ApplicationCard 
-                            key={application.id}
-                            application={application}
-                        />
-                    ))
+                {visibleApplications.map((application) => (
+                    <ApplicationCard
+                        key={application.id}
+                        application={application}
+                    />
+                ))
                 }
             </div>
         </div>
