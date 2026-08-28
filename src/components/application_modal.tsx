@@ -34,7 +34,7 @@ export const ApplicationModal = ({ isModalOpen, onClose, onSubmit, activeApplica
             <div className="bg-white rounded-2xl shadow-2xl w-full max-w-[620px] max-h-[90vh] overflow-y-auto">
                 <div className="flex items-start justify-between gap-4 px-7 pt-6 pb-[18px] border-b border-slate-200">
                     <div className="flex flex-col gap-1">
-                        <h1 className="text-slate-900 text-lg font-semibold">Neue Bewerbung</h1>
+                        <h1 className="text-slate-900 text-lg font-semibold">{activeApplication ? "Bewerbung bearbeiten" : "Neue Bewerbung"}</h1>
                         <span className="text-slate-500 text-sm">Pflichtfelder sind mit * markiert.</span>
                     </div>
                     <button

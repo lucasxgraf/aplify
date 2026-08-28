@@ -88,6 +88,7 @@ export const ApplicationDashboard = () => {
             setApplications([...applications, newApplicationWithId])
         }
         setIsModalOpen(false)
+        setActiveApplication(null)
     }
 
     return (
@@ -101,7 +102,7 @@ export const ApplicationDashboard = () => {
                     + Neue Bewerbung
                 </button>
             </div>
-            <ApplicationModal isModalOpen={isModalOpen} onClose={() => setIsModalOpen(false)} onSubmit={onSubmit} activeApplication={activeApplication}
+            <ApplicationModal isModalOpen={isModalOpen} onClose={() => {setIsModalOpen(false); setActiveApplication(null)}} onSubmit={onSubmit} activeApplication={activeApplication}
             />
             <Statusbar activeStatus={activeStatus} onStatusChange={setActiveStatus} activeSort={activeSort} onSortChange={setActiveSort}/>
             <div className='grid grid-cols-3  gap-4'>
