@@ -8,9 +8,9 @@ const statusColors: Record<Status, string> = {
   Zurückgezogen: "bg-slate-100 text-slate-600",
 };
 
-export const ApplicationCard = ({ application }: { application: Application }) => {
+export const ApplicationCard = ({ application, onClick }: { application: Application, onClick: () => void }) => {
     return (
-        <div className="bg-white rounded-xl border border-slate-200 p-6 min-h-28">
+        <div className="bg-white rounded-xl border border-slate-200 p-6 min-h-28 cursor-pointer" onClick={onClick}>
             <div className="flex flex-row justify-between border-b border-slate-200">
                 <div className="flex flex-col mb-4">
                     <span className="text-xl font-bold text-slate-900">{application.company}</span>

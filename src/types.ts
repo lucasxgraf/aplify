@@ -32,4 +32,5 @@ export type ModalProps = {
   isModalOpen: boolean;
   onClose: () => void;
   onSubmit: (newApplication: Omit<Application, "id">) => void;
+  activeApplication: Application | null;
 }

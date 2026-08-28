@@ -8,7 +8,7 @@ export const ApplicationDashboard = () => {
     const [activeStatus, setActiveStatus] = useState<string>("Alle");
     const [activeSort, setActiveSort] = useState<string>("Datum Neu-Alt");
     const [applications, setApplications] = useState<Application[]>([
-        {
+    {
             id:1,
             company:'Google',
             position:'Fullstack Developer',
@@ -50,6 +50,7 @@ export const ApplicationDashboard = () => {
         },
     ])
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+    const [activeApplication, setActiveApplication] = useState<Application | null>(null);
 
     const visibleApplications = applications.filter(
         (app) => activeStatus === "Alle" || app.status === activeStatus
@@ -75,13 +76,17 @@ export const ApplicationDashboard = () => {
     )
 
     const onSubmit = (newApplication: Omit<Application, "id">) => {
-        const newApplicationWithId: Application = {
-            ...newApplication,
-            id: applications.length === 0 
+        if (activeApplication != null) {
+            setApplications(applications.map(app => app.id == activeApplication.id ? {...app, ...newApplication} : app))
+        } else {
+            const newApplicationWithId: Application = {
+                ...newApplication,
+                id: applications.length === 0 
                 ? 1 
                 : Math.max(...applications.map(a => a.id)) + 1, 
+            };
+            setApplications([...applications, newApplicationWithId])
         }
-        setApplications([...applications, newApplicationWithId])
         setIsModalOpen(false)
     }
 
@@ -92,11 +97,11 @@ export const ApplicationDashboard = () => {
                     <h1 className="text-4xl font-bold text-slate-900">Meine Bewerbungen</h1>
                     <p className="text-slate-500">{applications.length} Bewerbungen • {applications.filter((app) => app.status === "Interview").length} laufende Interviews</p>
                 </div>
-                <button className='text-white font-bold bg-indigo-600 py-2 px-4 rounded-xl cursor-pointer' onClick={() => setIsModalOpen(true)}>
+                <button className='text-white font-bold bg-indigo-600 py-2 px-4 rounded-xl cursor-pointer' onClick={() => {setIsModalOpen(true); setActiveApplication(null);}} >
                     + Neue Bewerbung
                 </button>
             </div>
-            <ApplicationModal isModalOpen={isModalOpen} onClose={() => setIsModalOpen(false)} onSubmit={onSubmit}
+            <ApplicationModal isModalOpen={isModalOpen} onClose={() => setIsModalOpen(false)} onSubmit={onSubmit} activeApplication={activeApplication}
             />
             <Statusbar activeStatus={activeStatus} onStatusChange={setActiveStatus} activeSort={activeSort} onSortChange={setActiveSort}/>
             <div className='grid grid-cols-3  gap-4'>
@@ -104,6 +109,10 @@ export const ApplicationDashboard = () => {
                     <ApplicationCard
                         key={application.id}
                         application={application}
+                        onClick={() => {
+                            setActiveApplication(application);
+                            setIsModalOpen(true);
+                        }}
                     />
                 ))
                 }

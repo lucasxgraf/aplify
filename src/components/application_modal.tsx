@@ -1,7 +1,7 @@
+import { useState, useEffect } from 'react'
 import type { ModalProps, Application, Status } from '../types'
-import { useState } from 'react'
 
-export const ApplicationModal = ({ isModalOpen, onClose, onSubmit }: ModalProps) => {
+export const ApplicationModal = ({ isModalOpen, onClose, onSubmit, activeApplication }: ModalProps) => {
     const [formData, setFormData] = useState<Omit<Application, "id">>({
         company:"",
         position:"",
@@ -11,6 +11,21 @@ export const ApplicationModal = ({ isModalOpen, onClose, onSubmit }: ModalProps)
         notes:""
     })
     const statuses: Status[] = ["Beworben", "Interview", "Angebot", "Abgelehnt", "Zurückgezogen"];
+
+    useEffect(() => {
+        if (activeApplication) {
+            setFormData({...activeApplication});
+        } else {
+            setFormData({
+                company: "",
+                position: "",
+                status: "Beworben",
+                appliedDate: new Date(),
+                jobPostingUrl: "",
+                notes: ""
+            });
+        }
+    }, [activeApplication])
 
   return (
     <div>
