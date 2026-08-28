@@ -27,3 +27,8 @@ export type StatusbarProps = {
 }
 
 export type Status = "Beworben" | "Interview" | "Angebot" | "Abgelehnt" | "Zurückgezogen";
+
+export type ModalProps = {
+  isModalOpen: boolean;
+  onClose: () => void;
+}
