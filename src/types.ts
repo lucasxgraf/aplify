@@ -31,4 +31,5 @@ export type Status = "Beworben" | "Interview" | "Angebot" | "Abgelehnt" | "Zurü
 export type ModalProps = {
   isModalOpen: boolean;
   onClose: () => void;
+  onSubmit: (newApplication: Omit<Application, "id">) => void;
 }

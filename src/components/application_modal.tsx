@@ -1,7 +1,7 @@
-import type { ModalProps, Application } from '../types'
+import type { ModalProps, Application, Status } from '../types'
 import { useState } from 'react'
 
-export const ApplicationModal = ({ isModalOpen, onClose }: ModalProps) => {
+export const ApplicationModal = ({ isModalOpen, onClose, onSubmit }: ModalProps) => {
     const [formData, setFormData] = useState<Omit<Application, "id">>({
         company:"",
         position:"",
@@ -10,6 +10,7 @@ export const ApplicationModal = ({ isModalOpen, onClose }: ModalProps) => {
         jobPostingUrl:"",
         notes:""
     })
+    const statuses: Status[] = ["Beworben", "Interview", "Angebot", "Abgelehnt", "Zurückgezogen"];
 
   return (
     <div>
@@ -24,13 +25,12 @@ export const ApplicationModal = ({ isModalOpen, onClose }: ModalProps) => {
                     <button
                         onClick={() => onClose()}
                         className="w-8 h-8 flex items-center justify-center border border-slate-200 rounded-lg text-slate-500 cursor-pointer hover:bg-slate-100"
-                    >
-                        ✕
+                    > ✕
                     </button>
                 </div>
 
-                <form className="flex flex-col">
-                    <div className="flex flex-col gap-[22px] px-7 py-6">
+                <form className="flex flex-col" onSubmit={(e) => {e.preventDefault(); onSubmit(formData)}}>
+                    <div className="flex flex-col gap-6 px-7 py-6">
                         <div className="flex flex-col gap-3">
                             <span className="text-slate-400 text-[11px] font-semibold uppercase tracking-wider">Position</span>
                             <div className="grid grid-cols-2 gap-3.5">
@@ -39,6 +39,10 @@ export const ApplicationModal = ({ isModalOpen, onClose }: ModalProps) => {
                                     <input
                                         type="text"
                                         className="border border-slate-300 rounded-lg px-3 py-2 text-slate-900"
+                                        value={formData.company}
+                                        onChange={(e) => {
+                                            setFormData({...formData, company: e.target.value});
+                                        }}
                                     />
                                 </div>
                                 <div className="flex flex-col gap-1.5">
@@ -46,6 +50,10 @@ export const ApplicationModal = ({ isModalOpen, onClose }: ModalProps) => {
                                     <input
                                         type="text"
                                         className="border border-slate-300 rounded-lg px-3 py-2 text-slate-900"
+                                        value={formData.position}
+                                        onChange={(e) => {
+                                            setFormData({...formData, position: e.target.value});
+                                        }}
                                     />
                                 </div>
                             </div>
@@ -54,17 +62,29 @@ export const ApplicationModal = ({ isModalOpen, onClose }: ModalProps) => {
                         <div className="flex flex-col gap-3">
                             <span className="text-slate-400 text-[11px] font-semibold uppercase tracking-wider">Status &amp; Datum</span>
                             <div className="flex border border-slate-300 rounded-lg overflow-hidden">
-                                <div className="flex-1 text-center py-2 px-1.5 text-sm font-medium bg-indigo-600 text-white cursor-pointer">Beworben</div>
-                                <div className="flex-1 text-center py-2 px-1.5 text-sm font-medium text-slate-600 border-l border-slate-200 cursor-pointer">Interview</div>
-                                <div className="flex-1 text-center py-2 px-1.5 text-sm font-medium text-slate-600 border-l border-slate-200 cursor-pointer">Angebot</div>
-                                <div className="flex-1 text-center py-2 px-1.5 text-sm font-medium text-slate-600 border-l border-slate-200 cursor-pointer">Abgelehnt</div>
-                                <div className="flex-1 text-center py-2 px-1.5 text-sm font-medium text-slate-600 border-l border-slate-200 cursor-pointer">Zurückgezogen</div>
+                                {statuses.map((option) => (
+                                    <div
+                                        key={option}
+                                        onClick={() => setFormData({ ...formData, status: option })}
+                                        className={
+                                        formData.status === option
+                                            ? "flex-1 text-center py-2 px-1.5 text-sm font-medium bg-indigo-600 text-white cursor-pointer"
+                                            : "flex-1 text-center py-2 px-1.5 text-sm font-medium text-slate-600 border-l border-slate-200 cursor-pointer"
+                                        }
+                                    >
+                                        {option}
+                                    </div>
+                                ))}
                             </div>
                             <div className="flex flex-col gap-1.5 max-w-[240px]">
                                 <label className="text-slate-700 text-sm font-medium">Datum der Bewerbung *</label>
                                 <input
                                     type="date"
                                     className="border border-slate-300 rounded-lg px-3 py-2 text-slate-900 cursor-pointer"
+                                    value={formData.appliedDate.toISOString().split('T')[0]}
+                                    onChange={(e) => {
+                                        setFormData({...formData, appliedDate: new Date(e.target.value)});
+                                    }}
                                 />
                             </div>
                         </div>
@@ -77,6 +97,10 @@ export const ApplicationModal = ({ isModalOpen, onClose }: ModalProps) => {
                                     type="url"
                                     placeholder="https://..."
                                     className="border border-slate-300 rounded-lg px-3 py-2 text-slate-900"
+                                    value={formData.jobPostingUrl}
+                                    onChange={(e) => {
+                                        setFormData({...formData, jobPostingUrl: e.target.value});
+                                    }}
                                 />
                             </div>
                             <div className="flex flex-col gap-1.5">
@@ -84,6 +108,10 @@ export const ApplicationModal = ({ isModalOpen, onClose }: ModalProps) => {
                                 <textarea
                                     rows={3}
                                     className="border border-slate-300 rounded-lg px-3 py-2 text-slate-900 resize-none min-h-[76px]"
+                                    value={formData.notes}
+                                    onChange={(e) => {
+                                        setFormData({...formData, notes: e.target.value});
+                                    }}
                                 />
                             </div>
                         </div>

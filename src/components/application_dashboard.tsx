@@ -74,6 +74,17 @@ export const ApplicationDashboard = () => {
         }
     )
 
+    const onSubmit = (newApplication: Omit<Application, "id">) => {
+        const newApplicationWithId: Application = {
+            ...newApplication,
+            id: applications.length === 0 
+                ? 1 
+                : Math.max(...applications.map(a => a.id)) + 1, 
+        }
+        setApplications([...applications, newApplicationWithId])
+        setIsModalOpen(false)
+    }
+
     return (
         <div className="min-h-dvh bg-slate-50 p-8">
             <div className="flex items-end justify-between">
@@ -85,7 +96,8 @@ export const ApplicationDashboard = () => {
                     + Neue Bewerbung
                 </button>
             </div>
-            <ApplicationModal isModalOpen={isModalOpen} onClose={() => setIsModalOpen(false)}/>
+            <ApplicationModal isModalOpen={isModalOpen} onClose={() => setIsModalOpen(false)} onSubmit={onSubmit}
+            />
             <Statusbar activeStatus={activeStatus} onStatusChange={setActiveStatus} activeSort={activeSort} onSortChange={setActiveSort}/>
             <div className='grid grid-cols-3  gap-4'>
                 {visivbleSortedApplications.map((application) => (
