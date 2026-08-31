@@ -33,4 +33,5 @@ export type ModalProps = {
   onClose: () => void;
   onSubmit: (newApplication: Omit<Application, "id">) => void;
   activeApplication: Application | null;
+  deleteApplication: (id: number) => void;
 }

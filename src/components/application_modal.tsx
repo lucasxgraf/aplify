@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import type { ModalProps, Application, Status } from '../types'
 
-export const ApplicationModal = ({ isModalOpen, onClose, onSubmit, activeApplication }: ModalProps) => {
+export const ApplicationModal = ({ isModalOpen, onClose, onSubmit, activeApplication, deleteApplication }: ModalProps) => {
     const [formData, setFormData] = useState<Omit<Application, "id">>({
         company:"",
         position:"",
@@ -132,20 +132,31 @@ export const ApplicationModal = ({ isModalOpen, onClose, onSubmit, activeApplica
                         </div>
                     </div>
 
-                    <div className="flex items-center justify-end gap-2.5 px-7 py-4 border-t border-slate-200 bg-slate-50 rounded-b-2xl">
+                    <div className="flex items-center justify-between gap-2.5 px-7 py-4 border-t border-slate-200 bg-slate-50 rounded-b-2xl">
+                        {activeApplication && 
                         <button
                             type="button"
-                            onClick={() => onClose()}
-                            className="text-slate-700 px-4 py-2 rounded-lg border border-slate-300 cursor-pointer hover:bg-slate-100"
+                            onClick={() => deleteApplication(activeApplication.id)}
+                            className="text-rose-500 bg-rose-50 px-4 py-2 rounded-lg border border-rose-100 cursor-pointer hover:bg-rose-100"
                         >
-                            Abbrechen
+                            Löschen
                         </button>
-                        <button
-                            type="submit"
-                            className="text-white font-semibold bg-indigo-600 px-4 py-2 rounded-lg cursor-pointer hover:bg-indigo-700"
-                        >
-                            Speichern
-                        </button>
+                        }
+                        <div>
+                            <button
+                                type="button"
+                                onClick={() => onClose()}
+                                className="text-slate-700 px-4 py-2 rounded-lg border border-slate-300 cursor-pointer hover:bg-slate-100"
+                            >
+                                Abbrechen
+                            </button>
+                            <button
+                                type="submit"
+                                className="text-white font-semibold bg-indigo-600 px-4 py-2 rounded-lg cursor-pointer hover:bg-indigo-700"
+                            >
+                                Speichern
+                            </button>
+                        </div>
                     </div>
                 </form>
             </div>

@@ -56,6 +56,16 @@ export const ApplicationDashboard = () => {
         (app) => activeStatus === "Alle" || app.status === activeStatus
     );
 
+    const deleteApplication = () => {
+        if (window.confirm(`Bewerbung bei ${activeApplication?.company} wirklich löschen?`)) {
+            setApplications(applications.filter(
+                (app) => app.id !== activeApplication?.id
+            ))
+            setIsModalOpen(false);
+            setActiveApplication(null);
+        }
+    }
+
     const visivbleSortedApplications = visibleApplications.sort(
         (a, b) => {
             if (activeSort === "Datum Neu-Alt") {
@@ -102,7 +112,7 @@ export const ApplicationDashboard = () => {
                     + Neue Bewerbung
                 </button>
             </div>
-            <ApplicationModal isModalOpen={isModalOpen} onClose={() => {setIsModalOpen(false); setActiveApplication(null)}} onSubmit={onSubmit} activeApplication={activeApplication}
+            <ApplicationModal isModalOpen={isModalOpen} onClose={() => {setIsModalOpen(false); setActiveApplication(null)}} onSubmit={onSubmit} activeApplication={activeApplication} deleteApplication={deleteApplication}
             />
             <Statusbar activeStatus={activeStatus} onStatusChange={setActiveStatus} activeSort={activeSort} onSortChange={setActiveSort}/>
             <div className='grid grid-cols-3  gap-4'>
