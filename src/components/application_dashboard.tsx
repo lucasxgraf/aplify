@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Statusbar } from './statusbar'
 import { ApplicationCard } from './application_card'
 import { ApplicationModal } from './application_modal'
@@ -7,48 +7,26 @@ import type { Application } from '../types'
 export const ApplicationDashboard = () => {
     const [activeStatus, setActiveStatus] = useState<string>("Alle");
     const [activeSort, setActiveSort] = useState<string>("Datum Neu-Alt");
-    const [applications, setApplications] = useState<Application[]>([
-    {
-            id:1,
-            company:'Google',
-            position:'Fullstack Developer',
-            status:'Abgelehnt',
-            appliedDate:new Date(Date.now() - 1000 * 60 * 60 * 24 * 3),
-            jobPostingUrl: 'https://google.com'
-        },
-        {
-            id:2,
-            company:'Netflix',
-            position:'Software Engineer',
-            status:'Interview',
-            appliedDate:new Date(Date.now() - 1000 * 60 * 60 * 24 * 1),
-            jobPostingUrl: 'https://facebook.com'
-        },
-        {
-            id:3,
-            company:'Microsoft',
-            position:'Software Engineer',
-            status:'Interview',
-            appliedDate:new Date(Date.now() - 1000 * 60 * 60 * 24 * 2),
-            jobPostingUrl: 'https://facebook.com'
-        },
-        {
-            id:4,
-            company:'Facebook',
-            position:'AI Software Engineer',
-            status:'Zurückgezogen',
-            appliedDate:new Date(Date.now()),
-            jobPostingUrl: 'https://facebook.com'
-        },
-        {
-            id:5,
-            company:'BMW',
-            position:'Frontend Engineer',
-            status:'Beworben',
-            appliedDate:new Date(Date.now() - 1000 * 60 * 60 * 24 * 3),
-            jobPostingUrl: 'https://bmw.com'
-        },
-    ])
+    const [applications, setApplications] = useState<Application[]>(() => {
+        const storedApplications = localStorage.getItem("applications");
+        const parsedApplications = storedApplications ? JSON.parse(storedApplications) : [
+            {
+                id:1,
+                company:'Test Unternehmen',
+                position:'Fullstack Developer',
+                status:'Beworben',
+                appliedDate:new Date(Date.now() - 1000 * 60 * 60 * 24 * 3),
+                jobPostingUrl: 'https://google.com'
+            }
+        ];
+        return parsedApplications.map((app: Application) => {
+            return {
+                ...app,
+                appliedDate: new Date(app.appliedDate),
+            }
+        })
+    })
+
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
     const [activeApplication, setActiveApplication] = useState<Application | null>(null);
 
@@ -100,6 +78,10 @@ export const ApplicationDashboard = () => {
         setIsModalOpen(false)
         setActiveApplication(null)
     }
+
+    useEffect(() => {
+        localStorage.setItem("applications", JSON.stringify(applications));
+    }, [applications])
 
     return (
         <div className="min-h-dvh bg-slate-50 p-8">
