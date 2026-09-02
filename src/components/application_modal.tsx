@@ -30,9 +30,9 @@ export const ApplicationModal = ({ isModalOpen, onClose, onSubmit, activeApplica
   return (
     <div>
       {isModalOpen &&
-        <div className="flex items-center justify-center fixed top-0 left-0 w-full h-full z-50 bg-slate-900/45">
+        <div className="flex items-center justify-center fixed top-0 left-0 w-full h-full z-50 bg-slate-900/45 p-4">
             <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-2xl w-full max-w-[620px] max-h-[90vh] overflow-y-auto">
-                <div className="flex items-start justify-between gap-4 px-7 pt-6 pb-[18px] border-b border-slate-200 dark:border-slate-700">
+                <div className="flex items-start justify-between gap-4 px-4 sm:px-7 pt-6 pb-[18px] border-b border-slate-200 dark:border-slate-700">
                     <div className="flex flex-col gap-1">
                         <h1 className="text-slate-900 dark:text-slate-100 text-lg font-semibold">{activeApplication ? "Bewerbung bearbeiten" : "Neue Bewerbung"}</h1>
                         <span className="text-slate-500 dark:text-slate-400 text-sm">Pflichtfelder sind mit * markiert.</span>
@@ -45,10 +45,10 @@ export const ApplicationModal = ({ isModalOpen, onClose, onSubmit, activeApplica
                 </div>
 
                 <form className="flex flex-col" onSubmit={(e) => {e.preventDefault(); onSubmit(formData)}}>
-                    <div className="flex flex-col gap-6 px-7 py-6">
+                    <div className="flex flex-col gap-6 px-4 sm:px-7 py-6">
                         <div className="flex flex-col gap-3">
                             <span className="text-slate-400 dark:text-slate-500 text-[11px] font-semibold uppercase tracking-wider">Position</span>
-                            <div className="grid grid-cols-2 gap-3.5">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                                 <div className="flex flex-col gap-1.5">
                                     <label className="text-slate-700 dark:text-slate-300 text-sm font-medium">Firmenname *</label>
                                     <input
@@ -76,15 +76,15 @@ export const ApplicationModal = ({ isModalOpen, onClose, onSubmit, activeApplica
 
                         <div className="flex flex-col gap-3">
                             <span className="text-slate-400 dark:text-slate-500 text-[11px] font-semibold uppercase tracking-wider">Status &amp; Datum</span>
-                            <div className="flex border border-slate-300 dark:border-slate-600 rounded-lg overflow-hidden">
+                            <div className="flex overflow-x-auto border border-slate-300 dark:border-slate-600 rounded-lg">
                                 {statuses.map((option) => (
                                     <div
                                         key={option}
                                         onClick={() => setFormData({ ...formData, status: option })}
                                         className={
                                         formData.status === option
-                                            ? "flex-1 text-center py-2 px-1.5 text-sm font-medium bg-indigo-600 text-white cursor-pointer"
-                                            : "flex-1 text-center py-2 px-1.5 text-sm font-medium text-slate-600 dark:text-slate-300 border-l border-slate-200 dark:border-slate-600 cursor-pointer"
+                                            ? "flex-none sm:flex-1 whitespace-nowrap text-center py-2 px-3 sm:px-1.5 text-sm font-medium bg-indigo-600 text-white cursor-pointer"
+                                            : "flex-none sm:flex-1 whitespace-nowrap text-center py-2 px-3 sm:px-1.5 text-sm font-medium text-slate-600 dark:text-slate-300 border-l border-slate-200 dark:border-slate-600 cursor-pointer"
                                         }
                                     >
                                         {option}
@@ -132,7 +132,7 @@ export const ApplicationModal = ({ isModalOpen, onClose, onSubmit, activeApplica
                         </div>
                     </div>
 
-                    <div className="flex items-center justify-end gap-2.5 px-7 py-4 border-t border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 rounded-b-2xl">
+                    <div className="flex flex-wrap items-center justify-end gap-2.5 px-4 sm:px-7 py-4 border-t border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 rounded-b-2xl">
                         {activeApplication &&
                         <button
                             type="button"

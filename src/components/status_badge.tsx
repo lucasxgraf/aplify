@@ -26,7 +26,7 @@ export const StatusBadge = ({ label, active, onClick }: StatusBadgeProps) => {
 
 export const FilterBar = ({ activeStatus, onStatusChange }: FilterBarProps) => {
   return (
-    <div className="flex gap-2">
+    <div className="flex flex-wrap gap-2">
       {statuses.map((status) => (
         <StatusBadge
           key={status}

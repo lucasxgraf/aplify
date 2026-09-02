@@ -84,20 +84,20 @@ export const ApplicationDashboard = () => {
     }, [applications])
 
     return (
-        <div className="min-h-dvh bg-slate-50 dark:bg-slate-950 p-8">
-            <div className="flex items-end justify-between">
+        <div className="flex-1 bg-slate-50 dark:bg-slate-950 p-4 sm:p-8">
+            <div className="flex flex-col gap-4 items-start sm:flex-row sm:items-end sm:justify-between">
                 <div className="flex flex-col gap-2">
-                    <h1 className="text-4xl font-bold text-slate-900 dark:text-slate-100">Meine Bewerbungen</h1>
+                    <h1 className="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-slate-100">Meine Bewerbungen</h1>
                     <p className="text-slate-500 dark:text-slate-400">{applications.length} Bewerbungen • {applications.filter((app) => app.status === "Interview").length} laufende Interviews</p>
                 </div>
-                <button className='text-white font-bold bg-indigo-600 py-2 px-4 rounded-xl cursor-pointer' onClick={() => {setIsModalOpen(true); setActiveApplication(null);}} >
+                <button className='w-full sm:w-auto text-white font-bold bg-indigo-600 py-2 px-4 rounded-xl cursor-pointer' onClick={() => {setIsModalOpen(true); setActiveApplication(null);}} >
                     + Neue Bewerbung
                 </button>
             </div>
             <ApplicationModal isModalOpen={isModalOpen} onClose={() => {setIsModalOpen(false); setActiveApplication(null)}} onSubmit={onSubmit} activeApplication={activeApplication} deleteApplication={deleteApplication}
             />
             <Statusbar activeStatus={activeStatus} onStatusChange={setActiveStatus} activeSort={activeSort} onSortChange={setActiveSort}/>
-            <div className='grid grid-cols-3  gap-4'>
+            <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4'>
                 {visivbleSortedApplications.map((application) => (
                     <ApplicationCard
                         key={application.id}
