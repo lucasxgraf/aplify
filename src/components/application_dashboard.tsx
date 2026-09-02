@@ -69,9 +69,9 @@ export const ApplicationDashboard = () => {
         } else {
             const newApplicationWithId: Application = {
                 ...newApplication,
-                id: applications.length === 0 
-                ? 1 
-                : Math.max(...applications.map(a => a.id)) + 1, 
+                id: applications.length === 0
+                ? 1
+                : Math.max(...applications.map(a => a.id)) + 1,
             };
             setApplications([...applications, newApplicationWithId])
         }
@@ -84,11 +84,11 @@ export const ApplicationDashboard = () => {
     }, [applications])
 
     return (
-        <div className="min-h-dvh bg-slate-50 p-8">
+        <div className="min-h-dvh bg-slate-50 dark:bg-slate-950 p-8">
             <div className="flex items-end justify-between">
                 <div className="flex flex-col gap-2">
-                    <h1 className="text-4xl font-bold text-slate-900">Meine Bewerbungen</h1>
-                    <p className="text-slate-500">{applications.length} Bewerbungen • {applications.filter((app) => app.status === "Interview").length} laufende Interviews</p>
+                    <h1 className="text-4xl font-bold text-slate-900 dark:text-slate-100">Meine Bewerbungen</h1>
+                    <p className="text-slate-500 dark:text-slate-400">{applications.length} Bewerbungen • {applications.filter((app) => app.status === "Interview").length} laufende Interviews</p>
                 </div>
                 <button className='text-white font-bold bg-indigo-600 py-2 px-4 rounded-xl cursor-pointer' onClick={() => {setIsModalOpen(true); setActiveApplication(null);}} >
                     + Neue Bewerbung
